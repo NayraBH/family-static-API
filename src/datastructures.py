@@ -20,7 +20,8 @@ class FamilyStructure:
         return randint(0, 99999999)
 
     def add_member(self, member):
-        member["id"]= self._generateId()
+        if member["id"] is None:
+            member["id"]= self._generateId()
         if member:
             self._members.append(member)
             return True
@@ -28,24 +29,18 @@ class FamilyStructure:
             return False
 
     def delete_member(self, id):
-        # i = self._members.index(id)
-        # if i >= 0:
-        status = False
         for i, member in enumerate(self._members, start=0):
-            if member["id"] == id:
+            if member["id"] == int(id):
                 self._members.pop(i)
-                status = True
-        return status
+                return {"done": True}
+        return None
 
     def get_member(self, id):
-        # i = self._members.index(id)
-        # return self._members[i]
-        # return next(member for member in self._members if member["id"] == int(id))
         for member in self._members:
             if member["id"] == int(id):
                 return member
+        return {"id": "", "first_name": "", "age": "", "lucky_numbers": [] }
         
-
     # this method is done, it returns a list with all the family members
     def get_all_members(self):
         return self._members
